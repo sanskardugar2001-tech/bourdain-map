@@ -6,7 +6,7 @@ import MaskedText from "./components/MaskedText";
 import PlaceGallery from "./components/PlaceGallery";
 import DinnerInterest from "./components/DinnerInterest";
 import Credits from "./components/Credits";
-import { homeManifest, homePhotos, allCredits, pick, asQuote } from "../lib/home";
+import { homeManifest, homePhotos, allCredits, pick, asQuote, uniqueByFilename, isFoodStill } from "../lib/home";
 import { reelEntries } from "../lib/reels";
 import { siteStats, n } from "../lib/stats";
 import { placeBySlug } from "../lib/detail";
@@ -31,9 +31,13 @@ export default function Home() {
   const withMeta = <T extends { photo?: string }>(e?: T) =>
     e ? { ...e, meta: e.photo ? photos[e.photo] : undefined } : undefined;
 
-  const objects = (m.loader?.objects ?? []).filter((o) => o?.photo).map((o) => withMeta(o)!);
-  const portrait = withMeta(m.loader?.portrait) ?? null;
-  const pair = withMeta(pick(m.pairing?.photos));
+  const used = new Set<string>();
+  const objects = uniqueByFilename(m.loader?.objects, used).map((o) => withMeta(o)!);
+  const portraitRaw = m.loader?.portrait && !isFoodStill(m.loader.portrait.photo)
+    ? m.loader.portrait
+    : undefined;
+  const portrait = withMeta(portraitRaw) ?? objects[0] ?? null;
+  const pair = withMeta(pick(uniqueByFilename(m.pairing?.photos, used)));
   const pairQuote = asQuote(pick(m.pairing?.quotes));
   const seats = m.london?.seats ?? 8;
 
@@ -48,11 +52,14 @@ export default function Home() {
         }
       : null;
 
-  const room = m.pullback?.background;
+  const room = uniqueByFilename(
+    m.pullback?.background ? [m.pullback.background] : [],
+    used,
+  )[0];
   const roomMeta = room?.photo ? photos[room.photo] : undefined;
-  const footagePoster = pair?.meta && usable(pair.meta) ? largest(pair.meta) : "/home/bourdain-peabody-red.jpg";
+  const footagePoster = pair?.meta && usable(pair.meta) ? largest(pair.meta) : "/home/bourdain-portrait-black.jpg";
 
-  const gallery = (m.gallery ?? [])
+  const gallery = uniqueByFilename(m.gallery, used)
     .map((g) => {
       const place = g.placeSlug ? placeBySlug(g.placeSlug) : null;
       return {
@@ -103,7 +110,7 @@ export default function Home() {
               <span className={s.roomCredit}>{room.credit}</span>
             </>
           ) : (
-            <img src="/home/bourdain-podium.jpg" alt="" />
+            <img src="/home/pullback-kitchen.jpg" alt="" />
           )
         }
       />

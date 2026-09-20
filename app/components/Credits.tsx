@@ -38,9 +38,8 @@ export default function Credits({
             </ul>
           ) : (
             <p className={s.colText}>
-              Food stills are CC0 / public domain. Portraits are CC BY 2.0
-              via Wikimedia Commons. The pullback clip is by MANIFESTO
-              (@bymnfsto), used with permission.
+              Portraits are CC BY 2.0 via Wikimedia Commons. The pullback
+              clip is by MANIFESTO (@bymnfsto), used with permission.
             </p>
           )}
         </div>

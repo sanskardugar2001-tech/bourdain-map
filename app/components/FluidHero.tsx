@@ -172,11 +172,10 @@ export default function FluidHero({
   const stillRef = useRef<HTMLImageElement>(null);
   const [live, setLive] = useState(false);
   const [brush, setBrush] = useState(false);
-  const [muted, setMuted] = useState(true);
 
   /* WebGL fluid on wide fine pointers — except when the splash is a
-     9:16 film. That clip is the picture; burying it under an opaque
-     sim stretched it into a landscape smear. */
+     9:16 film. That clip fills the stage with object-fit: cover; the
+     sim would smear it. */
   useEffect(() => {
     if (vertical) {
       setLive(false);
@@ -575,28 +574,6 @@ export default function FluidHero({
           autoPlay
           preload="metadata"
         />
-      )}
-      {video && (
-        <button
-          type="button"
-          className={s.heroSound}
-          data-sound-pill
-          data-on={muted ? "false" : "true"}
-          aria-pressed={!muted}
-          aria-label={muted ? "Unmute film" : "Mute film"}
-          onClick={() => {
-            const el = footageRef.current;
-            if (!el) return;
-            el.muted = !el.muted;
-            setMuted(el.muted);
-            if (!el.muted) void el.play().catch(() => {});
-          }}
-        >
-          <span className={s.pillWord}>sound</span>
-          <span className={s.pillTrack} aria-hidden="true">
-            <span className={s.pillKnob} />
-          </span>
-        </button>
       )}
       {poster && (
         <img

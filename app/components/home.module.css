@@ -250,24 +250,35 @@
 }
 .markSmall { font-size: var(--step-3); gap: 0.02em; }
 
-/* The window. Circular, sized to the cap height so it sits as a letter
-   rather than as an image dropped into a word. */
+/* The window. Circular. The nav mark stays letter-sized; the loader O
+   opens much larger so the portrait fills the counter edge-to-edge. */
 .markO {
   display: inline-block;
+  position: relative;
   width: 0.72em;
   height: 0.72em;
+  aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 0.02em;
   vertical-align: baseline;
-  background: var(--raised);
+  background: transparent;
   flex: none;
+  flex-shrink: 0;
 }
 .markO img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  max-width: none;
   object-fit: cover;
+  object-position: center 22%;
   display: block;
+}
+.markHuge .markO {
+  width: clamp(28vmin, 1.18em, 56vmin);
+  height: clamp(28vmin, 1.18em, 56vmin);
 }
 /* No photo yet: stays an O rather than becoming a hole. */
 .markOEmpty {
@@ -722,40 +733,21 @@
   display: block;
   transform: none;
 }
-/* 9:16 film stands in the room — never laid on its side, never stretched
-   to fill the landscape hero. */
+/* 9:16 film still fills the stage — cover crops, it does not letterbox
+   into a skinny strip with ground showing on both sides. */
 .fluidHero[data-vertical="true"] .heroFootage {
-  inset: auto;
-  width: auto;
-  height: min(82vh, 100%);
-  max-height: 82vh;
-  aspect-ratio: 9 / 16;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+  left: auto;
+  top: auto;
+  transform: none;
   object-fit: cover;
+  object-position: center;
   z-index: 0;
 }
-/* Same pill as the pull-back, parked on the film so unmute is obvious
-   before the scroll journey starts. Always on — the film is muted. */
-.heroSound {
-  position: absolute;
-  left: 50%;
-  top: var(--s4);
-  transform: translateX(-50%);
-  z-index: 4;
-  pointer-events: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s3);
-  background: var(--ink);
-  border: 0;
-  border-radius: 999px;
-  padding: var(--s2) var(--s4);
-  cursor: pointer;
-}
-.heroSound[data-on="true"] .pillKnob { transform: translateX(20px); }
-.heroSound[data-on="true"] .pillTrack { background: var(--ink-faint); }
 /* Never distorted, never masked, never pushed around. Above the canvas,
    transparent to the pointer so the water underneath still stirs. */
 .heroWord {

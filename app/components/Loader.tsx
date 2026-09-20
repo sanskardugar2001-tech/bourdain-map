@@ -82,8 +82,8 @@ export default function Loader({
       setN(Math.round(ease(t) * total));
 
       if (t < 1) {
-        if (now >= nextSwap && objects.length > 1) {
-          i = (i + 1) % objects.length;
+        if (now >= nextSwap && objects.length > 1 && i < objects.length - 1) {
+          i = i + 1;
           setIdx(i);
           nextSwap = now + interval(t);
         }

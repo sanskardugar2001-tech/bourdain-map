@@ -47,6 +47,42 @@ export type HomeManifest = {
 export const pick = <T,>(pool: T[] | undefined): T | undefined =>
   pool && pool.length ? pool[Math.floor(Math.random() * pool.length)] : undefined;
 
+/** Basename, lowercased — the unit we dedupe homepage stills on. */
+export function photoFile(photo?: string): string {
+  const raw = (photo ?? "").trim();
+  if (!raw) return "";
+  const base = raw.split("/").pop() ?? raw;
+  return base.toLowerCase();
+}
+
+/**
+ * Plates, bowls, market food. Banned on `/`. Kitchen-without-a-plate
+ * (empty pass) is atmosphere and is allowed; dinner tables are not.
+ */
+const FOOD_STILL =
+  /(^|[-_])(pho|ramen|dumpling|skewer|octopus|crab|sashimi)([-_.]|$)|obama-hanoi|pairing-dinner|pairing-kitchen|candid-2008|loader-pho|loader-ramen|loader-dumpling|loader-skewer|hero-crab|hero-octopus|hero-ramen/;
+
+export function isFoodStill(photo?: string): boolean {
+  const key = photoFile(photo);
+  return key.length > 0 && FOOD_STILL.test(key);
+}
+
+/** First occurrence of each filename wins. Food stills are dropped. */
+export function uniqueByFilename<T extends { photo?: string }>(
+  entries: T[] | undefined,
+  used?: Set<string>,
+): T[] {
+  const seen = used ?? new Set<string>();
+  const out: T[] = [];
+  for (const e of entries ?? []) {
+    const key = photoFile(e.photo);
+    if (!key || isFoodStill(key) || seen.has(key)) continue;
+    seen.add(key);
+    out.push(e);
+  }
+  return out;
+}
+
 export function asQuote(q: string | HomeQuote | undefined): HomeQuote | undefined {
   if (!q) return undefined;
   if (typeof q === "string") return q.trim() ? { text: q.trim() } : undefined;
@@ -79,5 +115,7 @@ export function allCredits(m: HomeManifest): { photo: string; credit: string }[]
   (m.pairing?.photos ?? []).forEach(add);
   (m.gallery ?? []).forEach(add);
   (m.reels ?? []).forEach(add);
-  return out.filter((c, i, a) => a.findIndex((x) => x.photo === c.photo) === i);
+  return out.filter((c, i, a) =>
+    a.findIndex((x) => x.photo === c.photo) === i && !isFoodStill(c.photo)
+  );
 }

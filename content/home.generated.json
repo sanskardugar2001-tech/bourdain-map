@@ -106,58 +106,58 @@
    }
   ]
  },
- "bourdain-candid-2008.jpg": {
-  "width": 1280,
-  "height": 960,
-  "ratio": 1.3333,
+ "bourdain-2007.jpg": {
+  "width": 373,
+  "height": 522,
+  "ratio": 0.7146,
   "srcset": [
    {
-    "width": 800,
-    "src": "/home/opt/bourdain-candid-2008-800.webp"
+    "width": 373,
+    "src": "/home/opt/bourdain-2007-373.webp"
    }
   ]
  },
- "bourdain-obama-hanoi.jpg": {
-  "width": 1024,
-  "height": 682,
-  "ratio": 1.5015,
+ "bourdain-peabody-look.jpg": {
+  "width": 1170,
+  "height": 1589,
+  "ratio": 0.7363,
   "srcset": [
    {
     "width": 800,
-    "src": "/home/opt/bourdain-obama-hanoi-800.webp"
+    "src": "/home/opt/bourdain-peabody-look-800.webp"
    }
   ]
  },
- "hero-octopus.jpg": {
-  "width": 1024,
-  "height": 683,
-  "ratio": 1.4993,
+ "bourdain-wnyc-2011.jpg": {
+  "width": 533,
+  "height": 600,
+  "ratio": 0.8883,
+  "srcset": [
+   {
+    "width": 533,
+    "src": "/home/opt/bourdain-wnyc-2011-533.webp"
+   }
+  ]
+ },
+ "pullback-kitchen.jpg": {
+  "width": 890,
+  "height": 596,
+  "ratio": 1.4933,
   "srcset": [
    {
     "width": 800,
-    "src": "/home/opt/hero-octopus-800.webp"
+    "src": "/home/opt/pullback-kitchen-800.webp"
    }
   ]
  },
- "hero-crab.jpg": {
-  "width": 576,
-  "height": 1024,
-  "ratio": 0.5625,
-  "srcset": [
-   {
-    "width": 576,
-    "src": "/home/opt/hero-crab-576.webp"
-   }
-  ]
- },
- "loader-pho.jpg": {
-  "width": 1024,
-  "height": 769,
-  "ratio": 1.3316,
+ "bourdain-2014.jpg": {
+  "width": 1095,
+  "height": 1182,
+  "ratio": 0.9264,
   "srcset": [
    {
     "width": 800,
-    "src": "/home/opt/loader-pho-800.webp"
+    "src": "/home/opt/bourdain-2014-800.webp"
    }
   ]
  }

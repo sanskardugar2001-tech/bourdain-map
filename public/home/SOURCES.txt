@@ -30,8 +30,8 @@ bourdain-obama-hanoi.jpg     |  Public domain (US gov)  |  Obama + Bourdain Hano
 bourdain-signing.jpg         |  CC BY 2.0  |  Anthony Bourdain IMG 0416 (2047345857).jpg
 
 --- Solo Bourdain portraits (2026-09-20) ---
-From Downloads/bourdain_images/bourdain (CC pack). Loader O cycles these — no food plates.
-bourdain-portrait-black.jpg, pillar, plain, peabody-red, podium, wnyc, candid-2008, hires, peabody, signing
+From Downloads/bourdain_images/bourdain (CC pack). Loader O cycles unique solo portraits — no food plates, no repeated filenames.
+bourdain-portrait-black.jpg, pillar, plain, peabody-red, podium, wnyc, hires, peabody, signing, 2007
 
 --- Extra Commons stills (kept on disk, not in the O-cycle) ---
 Category: https://commons.wikimedia.org/wiki/Category:Anthony_Bourdain
