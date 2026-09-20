@@ -3,18 +3,19 @@
     "The homepage. Edit this, drop images in public/home/, and the page updates.",
     "EVERY PHOTO NEEDS A CREDIT.",
     "Him-slots (loader O, hero, pairing, pullback people, reel posters) are solo portraits only.",
-    "Food stills stay in the place gallery. Do not put ramen/pho/dumplings in the O-cycle."
+    "No food plates anywhere on `/` — not loader, hero, pairing, gallery, or pullback stills.",
+    "Every still is unique by filename. Do not repeat a path across lists."
   ],
   "loader": {
     "objects": [
       {
         "photo": "bourdain-portrait-black.jpg",
         "alt": "Anthony Bourdain, stark portrait",
-        "credit": "CC pack"
+        "credit": "CC BY 2.0 — crop 3, Wikimedia"
       },
       {
         "photo": "bourdain-portrait-hires.jpg",
-        "alt": "Anthony Bourdain portrait",
+        "alt": "Anthony Bourdain in a dark studio",
         "credit": "CC BY 2.0 Wikimedia"
       },
       {
@@ -24,12 +25,12 @@
       },
       {
         "photo": "bourdain-peabody-red.jpg",
-        "alt": "Anthony Bourdain, Peabody Awards",
+        "alt": "Anthony Bourdain, Peabody Awards red carpet",
         "credit": "CC pack"
       },
       {
         "photo": "bourdain-signing.jpg",
-        "alt": "Anthony Bourdain",
+        "alt": "Anthony Bourdain in a leather jacket",
         "credit": "CC BY 2.0"
       },
       {
@@ -39,7 +40,7 @@
       },
       {
         "photo": "bourdain-portrait-plain.jpg",
-        "alt": "Anthony Bourdain",
+        "alt": "Anthony Bourdain, hallway portrait",
         "credit": "CC pack"
       },
       {
@@ -53,49 +54,19 @@
         "credit": "CC pack"
       },
       {
-        "photo": "bourdain-candid-2008.jpg",
-        "alt": "Anthony Bourdain, 2008",
-        "credit": "CC pack"
+        "photo": "bourdain-2007.jpg",
+        "alt": "Anthony Bourdain speaking, 2007",
+        "credit": "CC BY 2.0 Wikimedia"
       }
     ],
     "portrait": {
       "photo": "bourdain-portrait-black.jpg",
       "alt": "Anthony Bourdain, stark portrait",
-      "credit": "CC pack"
+      "credit": "CC BY 2.0 — crop 3, Wikimedia"
     }
   },
   "hero": {
-    "photos": [
-      {
-        "photo": "bourdain-portrait-black.jpg",
-        "alt": "Anthony Bourdain, stark portrait",
-        "credit": "CC pack",
-        "placeSlug": "ha-noi-vn"
-      },
-      {
-        "photo": "bourdain-portrait-hires.jpg",
-        "alt": "Anthony Bourdain portrait",
-        "credit": "CC BY 2.0 Wikimedia",
-        "placeSlug": "tsukiji-fish-market-chuo"
-      },
-      {
-        "photo": "bourdain-peabody-red.jpg",
-        "alt": "Anthony Bourdain, Peabody Awards",
-        "credit": "CC pack",
-        "placeSlug": "borough-market-greater-london"
-      },
-      {
-        "photo": "bourdain-signing.jpg",
-        "alt": "Anthony Bourdain at a book signing",
-        "credit": "CC BY 2.0",
-        "placeSlug": "brasserie-les-halles-new-york"
-      },
-      {
-        "photo": "bourdain-podium.jpg",
-        "alt": "Anthony Bourdain at the podium",
-        "credit": "CC pack"
-      }
-    ],
+    "photos": [],
     "quotes": [
       {
         "text": "If I’m an advocate for anything, it’s to move. As far as you can, as much as you can.",
@@ -110,45 +81,24 @@
   },
   "gallery": [
     {
-      "photo": "bourdain-obama-hanoi.jpg",
-      "alt": "Bun cha in Hanoi",
-      "credit": "Public domain — White House Photo Office",
+      "photo": "bourdain-peabody-look.jpg",
+      "alt": "Anthony Bourdain",
+      "credit": "CC BY 2.0 Peabody Awards",
       "placeSlug": "banh-cuon-nong-kim-thoa-ha-noi",
       "line": "Hanoi"
     },
     {
-      "photo": "hero-octopus.jpg",
-      "alt": "Fresh octopus at a market",
-      "credit": "Public domain / CC0 via Rawpixel",
-      "placeSlug": "borough-market-greater-london",
-      "line": "Borough Market"
-    },
-    {
-      "photo": "hero-crab.jpg",
-      "alt": "Crab at a seafood market",
-      "credit": "Public domain / CC0 via Rawpixel",
+      "photo": "bourdain-wnyc-2011.jpg",
+      "alt": "Anthony Bourdain, 2011",
+      "credit": "CC BY 2.0 — WNYC",
       "placeSlug": "tsukiji-fish-market-chuo",
       "line": "Tsukiji"
-    },
-    {
-      "photo": "loader-pho.jpg",
-      "alt": "Overhead bowl of pho",
-      "credit": "Public domain / CC0 via Rawpixel",
-      "placeSlug": "st-john-restaurant-greater-london",
-      "line": "A bowl"
-    },
-    {
-      "photo": "bourdain-signing.jpg",
-      "alt": "Anthony Bourdain at a book signing",
-      "credit": "CC BY 2.0 — Neeta Lind via Wikimedia Commons",
-      "placeSlug": "brasserie-les-halles-new-york",
-      "line": "Les Halles"
     }
   ],
   "reels": [
     {
       "file": "dont-be-afraid.mp4",
-      "poster": "bourdain-peabody-red.jpg",
+      "poster": "bourdain-peabody-close.jpg",
       "credit": "Clip by MANIFESTO (@bymnfsto), used with permission",
       "line": "Don't be afraid to sit down."
     }
@@ -160,27 +110,17 @@
     "start": 0,
     "vertical": true,
     "background": {
-      "photo": "bourdain-podium.jpg",
-      "alt": "Anthony Bourdain at the podium",
-      "credit": "CC pack"
+      "photo": "pullback-kitchen.jpg",
+      "alt": "An empty kitchen",
+      "credit": "Site still"
     }
   },
   "pairing": {
     "photos": [
       {
-        "photo": "bourdain-portrait-black.jpg",
-        "alt": "Anthony Bourdain, stark portrait",
-        "credit": "CC pack"
-      },
-      {
-        "photo": "bourdain-peabody-red.jpg",
-        "alt": "Anthony Bourdain, Peabody Awards",
-        "credit": "CC pack"
-      },
-      {
-        "photo": "bourdain-wnyc.jpg",
-        "alt": "Anthony Bourdain at WNYC",
-        "credit": "CC pack"
+        "photo": "bourdain-2014.jpg",
+        "alt": "Anthony Bourdain, 2014",
+        "credit": "CC BY 2.0 Wikimedia"
       }
     ],
     "quotes": [

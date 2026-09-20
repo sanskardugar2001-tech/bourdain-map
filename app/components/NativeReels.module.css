@@ -108,6 +108,24 @@
 }
 .sound[data-on="true"] { outline: 1px solid rgba(243, 241, 234, 0.4); }
 
+.unmute {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: rgba(10, 10, 10, 0.72);
+  color: #f3f1ea;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
 .swipe {
   position: absolute;
   left: 50%;
