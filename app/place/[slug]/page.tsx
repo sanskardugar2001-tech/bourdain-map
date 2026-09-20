@@ -2,8 +2,9 @@ import {
   allPlaces, placeBySlug, SHOW_NAMES, KIND_LABELS, displayPlaceName,
 } from "../../../lib/detail";
 import { cityQuoteBest, cityClipBest } from "../../../lib/cityQuotes";
-import { youtubeThumb, youtubeWatch } from "../../../lib/youtube";
+import { youtubeWatch } from "../../../lib/youtube";
 import PlaceActions from "../../components/PlaceActions";
+import YtThumb from "../../components/YtThumb";
 import styles from "./place.module.css";
 import Link from "next/link";
 
@@ -89,12 +90,9 @@ export default async function PlacePage({ params }: { params: Promise<{ slug: st
           rel="noreferrer"
           target="_blank"
         >
-          <img
+          <YtThumb
             className={styles.watchThumb}
-            src={youtubeThumb(clip.id)}
-            alt=""
-            width={480}
-            height={360}
+            id={clip.id}
           />
           <span>{clip.title ?? "Official clip"}</span>
         </a>

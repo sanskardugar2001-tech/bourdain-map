@@ -24,7 +24,8 @@
   text-decoration: none;
   color: inherit;
 }
-.epCard[data-empty="true"] {
+.epCard[data-empty="true"],
+.epCard:not(:has(img)) {
   grid-template-columns: 1fr;
 }
 .epCard:hover .epTitle { color: var(--ink); }
@@ -87,7 +88,7 @@
   object-fit: cover;
   display: block;
   border-radius: 2px;
-  background: var(--raised);
+  background: transparent;
 }
 
 .places { list-style: none; margin: 0; padding: 0;

@@ -1,6 +1,7 @@
 import { allCities, cityBySlug, SHOW_NAMES } from "../../../lib/detail";
 import { cityQuoteBest, cityClipBest, assignEpisodeClip } from "../../../lib/cityQuotes";
-import { youtubeId, youtubeThumb, youtubeWatch } from "../../../lib/youtube";
+import { youtubeId, youtubeWatch } from "../../../lib/youtube";
+import YtThumb from "../../components/YtThumb";
 import styles from "./city.module.css";
 import Link from "next/link";
 
@@ -118,12 +119,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
                       rel="noreferrer"
                       target="_blank"
                     >
-                      <img
+                      <YtThumb
                         className={styles.ytThumb}
-                        src={youtubeThumb(id)}
-                        alt=""
-                        width={480}
-                        height={360}
+                        id={id}
                       />
                       {meta}
                     </a>
@@ -154,12 +152,9 @@ export default async function CityPage({ params }: { params: Promise<{ slug: str
             rel="noreferrer"
             target="_blank"
           >
-            <img
+            <YtThumb
               className={styles.ytThumb}
-              src={youtubeThumb(yt)}
-              alt=""
-              width={480}
-              height={360}
+              id={yt}
             />
             <span>
               {ytTitle}

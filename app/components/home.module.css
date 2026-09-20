@@ -721,6 +721,19 @@
   display: block;
   transform: none;
 }
+/* 9:16 film stands in the room — never laid on its side, never stretched
+   to fill the landscape hero. */
+.fluidHero[data-vertical="true"] .heroFootage {
+  inset: auto;
+  width: auto;
+  height: 86%;
+  max-height: 86vh;
+  aspect-ratio: 9 / 16;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
 /* Same pill as the pull-back, parked on the film so unmute is obvious
    before the scroll journey starts. Always on — the film is muted. */
 .heroSound {

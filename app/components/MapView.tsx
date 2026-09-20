@@ -48,7 +48,32 @@ type Props = {
   selectedCitySlug?: string | null;
   cities?: SearchCity[] | null;
   flyTo?: { lon: number; lat: number; zoom?: number; id?: string } | null;
+  panelOpen?: boolean;
 };
+
+function cameraPadding(panel: boolean): {
+  top: number; right: number; bottom: number; left: number;
+} {
+  if (typeof window === "undefined") {
+    return { top: 56, right: 16, bottom: 24, left: 16 };
+  }
+  if (!panel) return { top: 56, right: 16, bottom: 24, left: 16 };
+  const mobile = window.matchMedia("(max-width: 720px)").matches;
+  if (mobile) {
+    return {
+      top: 56,
+      right: 16,
+      bottom: Math.round(window.innerHeight * 0.62),
+      left: 16,
+    };
+  }
+  return {
+    top: 56,
+    right: Math.min(420, Math.round(window.innerWidth * 0.42)),
+    bottom: 24,
+    left: 16,
+  };
+}
 
 function unlockMap(m: MapLibreMap) {
   m.scrollZoom.enable();
@@ -265,7 +290,7 @@ function citiesCollection(cities: SearchCity[]): GeoJSON.FeatureCollection {
 }
 
 export default function MapView({
-  onSelect, onSelectCity, selectedId, selectedCitySlug, cities, flyTo,
+  onSelect, onSelectCity, selectedId, selectedCitySlug, cities, flyTo, panelOpen,
 }: Props) {
   const holder = useRef<HTMLDivElement>(null);
   const map = useRef<MapLibreMap | null>(null);
@@ -277,6 +302,9 @@ export default function MapView({
   const selectedIdRef = useRef(selectedId);
   const selectedCityRef = useRef(selectedCitySlug);
   const bound = useRef(false);
+  const flownKey = useRef("");
+  const panelRef = useRef(Boolean(panelOpen));
+  const flying = useRef(false);
   const [ready, setReady] = useState(false);
   const [loaded, setLoaded] = useState(0);
   const [theme, setTheme] = useState<MapTheme>("light");
@@ -286,6 +314,7 @@ export default function MapView({
   useEffect(() => { onSelectCityRef.current = onSelectCity; }, [onSelectCity]);
   useEffect(() => { selectedIdRef.current = selectedId; }, [selectedId]);
   useEffect(() => { selectedCityRef.current = selectedCitySlug; }, [selectedCitySlug]);
+  useEffect(() => { panelRef.current = Boolean(panelOpen); }, [panelOpen]);
 
   useEffect(() => {
     reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -328,12 +357,15 @@ export default function MapView({
         attributionControl: { compact: true },
         pitchWithRotate: false,
         dragRotate: false,
+        scrollZoom: { around: "center" },
+        touchZoomRotate: { around: "center" },
         dragPan: { linearity: 0.28, deceleration: 2600, maxSpeed: 1400 },
         renderWorldCopies: true,
         fadeDuration: 220,
         maxTileCacheSize: 160,
         pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
         cancelPendingTileRequestsWhileZooming: true,
+        canvasContextAttributes: { alpha: true, antialias: false, powerPreference: "low-power" },
       });
     } catch (err) {
       console.warn("[map] WebGL failed — search and the panel still work.", err);
@@ -343,6 +375,9 @@ export default function MapView({
     }
     map.current = m;
     (window as unknown as { __map?: unknown }).__map = m;
+    m.getCanvas().style.background = startTheme === "dark" ? "#0B0D10" : "#E6E6E1";
+    const onWheel = () => unlockMap(m);
+    m.getCanvas().addEventListener("wheel", onWheel, { passive: true });
     m.addControl(new NavigationControl({ showCompass: false }), "top-right");
 
     const bind = () => {
@@ -454,10 +489,12 @@ export default function MapView({
     });
 
     return () => {
+      m.getCanvas().removeEventListener("wheel", onWheel);
       removeProtocol("pmtiles");
       m.remove();
       map.current = null;
       bound.current = false;
+      flownKey.current = "";
     };
   }, [restoreOverlays]);
 
@@ -489,36 +526,63 @@ export default function MapView({
     const m = map.current;
     if (!m || !ready || destLon == null || destLat == null) return;
     const dest: [number, number] = [destLon, destLat];
+    const zoom = Math.min(destZoom ?? 15, MAX_ZOOM);
+    const key = `${destLon.toFixed(5)},${destLat.toFixed(5)},${zoom.toFixed(2)}`;
+    const pad = cameraPadding(panelRef.current);
+    const samePlace = flownKey.current === key;
+    flownKey.current = key;
+    unlockMap(m);
+    flying.current = true;
+    const done = () => {
+      flying.current = false;
+      unlockMap(m);
+    };
+    const later = window.setTimeout(done, 2000);
+    if (samePlace) {
+      m.once("moveend", done);
+      m.easeTo({ padding: pad, duration: reduced.current ? 0 : 450 });
+      return () => window.clearTimeout(later);
+    }
     const here = m.getCenter();
     const hop = Math.hypot(here.lng - dest[0], here.lat - dest[1]);
-    const zoom = Math.min(destZoom ?? 15, MAX_ZOOM);
-    unlockMap(m);
     m.stop();
-    const done = () => unlockMap(m);
     m.once("moveend", done);
     if (reduced.current) {
-      m.jumpTo({ center: dest, zoom });
-      unlockMap(m);
-      return;
+      m.jumpTo({ center: dest, zoom, padding: pad });
+      done();
+      return () => window.clearTimeout(later);
     }
     if (hop < 8) {
       m.easeTo({
         center: dest,
         zoom,
+        padding: pad,
         duration: 1600,
         easing: EASE,
-        essential: true,
       });
-      return;
+      return () => window.clearTimeout(later);
     }
     m.flyTo({
       center: dest,
       zoom,
+      padding: pad,
       duration: 1800,
       curve: 1.42,
-      essential: true,
     });
+    return () => window.clearTimeout(later);
   }, [destLon, destLat, destZoom, ready]);
+
+  useEffect(() => {
+    const m = map.current;
+    if (!m || !ready || flying.current) return;
+    unlockMap(m);
+    m.easeTo({
+      padding: cameraPadding(Boolean(panelOpen)),
+      duration: reduced.current ? 0 : 450,
+    });
+    const later = window.setTimeout(() => unlockMap(m), 600);
+    return () => window.clearTimeout(later);
+  }, [panelOpen, ready]);
 
   const resetView = useCallback(() => {
     const m = map.current;
@@ -529,8 +593,8 @@ export default function MapView({
     m.flyTo({
       center: WORLD.center,
       zoom: WORLD.zoom,
+      padding: cameraPadding(false),
       duration: reduced.current ? 0 : 1600,
-      essential: true,
     });
   }, []);
 
@@ -542,6 +606,7 @@ export default function MapView({
     writeMapTheme(next);
     document.documentElement.dataset.mapTheme = next;
     if (!m) return;
+    m.getCanvas().style.background = next === "dark" ? "#0B0D10" : "#E6E6E1";
     const cam = {
       center: m.getCenter(),
       zoom: m.getZoom(),
@@ -587,7 +652,7 @@ export default function MapView({
               is set. Never a "No basemap" / pins-only message. */}
           {loaded === 0 ? "Finding the places…"
             : loaded < 0 ? "The places didn't load. Reload and they should."
-            : `${loaded.toLocaleString()} places`}
+            : `${loaded.toLocaleString("en-GB")} places he ate`}
         </p>
       </div>
     </div>

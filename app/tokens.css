@@ -27,12 +27,12 @@
   --accent-soft: rgba(162, 75, 53, 0.14);
   --accent-dim:  rgba(162, 75, 53, 0.62);
 
-  /* ---- basemap (dark cinematic; pins stay the only accent) ---- */
-  --map-land:    #14161A;
-  --map-water:   #0B0D10;
-  --map-line:    #2A2E34;
-  --map-road:    #1E2228;
-  --map-label:   #9AA0A8;
+  /* ---- basemap (paper is the default; night is a toggle) ---- */
+  --map-land:    #E6E6E1;
+  --map-water:   #D2D4D0;
+  --map-line:    #C2C2BA;
+  --map-road:    #D8D8D0;
+  --map-label:   #5C6058;
 
   /* ---- type: two families plus mono for labels ---- */
   --font-display: "Instrument Serif", Superclarendon, "Iowan Old Style",
@@ -46,22 +46,22 @@
   --w-medium:  500;
   --w-bold:    700;
 
-  /* ---- scale, two regimes ----
-     Display steps jump ~1.36×; text steps tighten to ~1.10–1.25×. Big
-     leaps at the top, fine gradations at the bottom, which is what makes
-     a scale read as authored rather than generated. Eleven sizes total.
-     1.5625rem / 25px is the deliberate odd one. */
-  --step--2: 0.75rem;    /* 12 — smallest label            */
-  --step--1: 0.875rem;   /* 14 — uppercase mono label      */
-  --step-0:  1.0625rem;  /* 17 — small body                */
-  --step-1:  1.25rem;    /* 20 — body                      */
-  --step-2:  1.5rem;     /* 24 — large body                */
-  --step-3:  1.75rem;    /* 28                             */
-  --step-4:  2.25rem;    /* 36 — sub-display               */
-  --step-5:  3.25rem;    /* 52 — display 4                 */
-  --step-6:  4.5rem;     /* 72 — display 3                 */
-  --step-7:  6.5rem;     /* 104 — display 2                */
-  --step-8:  9rem;       /* 144 — display 1                */
+  /* ---- scale: noth.in arithmetic, 16px root ----
+     Display jumps ~×1.33 (80 → 60 → 40), then text tightens to
+     ×1.11–1.25. 1.5625rem / 25px is the authored odd one. The loader
+     mark and hero word stay on their own clamps — those are the one
+     place we spend the size. */
+  --step--2: 0.625rem;   /* 10 — smallest label            */
+  --step--1: 0.75rem;    /* 12 — uppercase micro-label     */
+  --step-0:  0.875rem;   /* 14 — body default              */
+  --step-1:  1rem;       /* 16 — loader, small body        */
+  --step-2:  1.125rem;   /* 18 — body blocks               */
+  --step-3:  1.25rem;    /* 20 — descriptions              */
+  --step-4:  1.5625rem;  /* 25 — the deliberate odd step   */
+  --step-5:  1.875rem;   /* 30                             */
+  --step-6:  2.5rem;     /* 40 — h3 / mobile display       */
+  --step-7:  3.75rem;    /* 60 — h2                        */
+  --step-8:  5rem;       /* 80 — h1                        */
 
   /* ---- tracking: exactly two values ---- */
   --track-tight: -0.01em;  /* anything display-sized        */
@@ -73,7 +73,7 @@
   /* ---- leading ---- */
   --lh-solid: 1;      /* everything display-sized, set solid */
   --lh-tight: 1.2;
-  --lh-body:  1.55;
+  --lh-body:  1.4;
 
   --measure: 62ch;
 

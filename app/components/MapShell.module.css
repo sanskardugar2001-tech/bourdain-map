@@ -154,6 +154,11 @@
 }
 .close:hover { color: var(--ink); border-color: var(--edge-strong); }
 
+:global(html[data-map-theme="dark"]) .wordmark { color: #E8E6E1; }
+:global(html[data-map-theme="dark"]) .tagline { color: #C4C8CE; }
+:global(html[data-map-theme="dark"]) .nav a { color: #8A9098; }
+:global(html[data-map-theme="dark"]) .nav a:hover { color: #E8E6E1; }
+
 /* Mobile: a bottom sheet, not a panel that eats the screen. */
 @media (max-width: 720px) {
   .panel {

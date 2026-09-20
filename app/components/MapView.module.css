@@ -5,7 +5,13 @@
   pointer-events: auto;
 }
 .map { position: absolute; inset: 0; background: #E6E6E1; }
+.map :global(.maplibregl-canvas),
+.map :global(.maplibregl-canvas-container) { background: #E6E6E1; }
 .wrap[data-map-theme="dark"] .map { background: #0B0D10; }
+.wrap[data-map-theme="dark"] .map :global(.maplibregl-canvas),
+.wrap[data-map-theme="dark"] .map :global(.maplibregl-canvas-container) {
+  background: #0B0D10;
+}
 
 /* MapLibre's own chrome, brought into the palette. */
 /* Clear the masthead. */
@@ -69,6 +75,17 @@
   border-color: var(--edge-strong);
   transition: color var(--t-hover-in) var(--ease-out),
               border-color var(--t-hover-in) var(--ease-out);
+}
+
+.wrap[data-map-theme="dark"] .status { color: #8A9098; }
+.wrap[data-map-theme="dark"] .reset {
+  background: color-mix(in srgb, #1A1C20 88%, transparent);
+  border-color: #3A4048;
+  color: #C4C8CE;
+}
+.wrap[data-map-theme="dark"] .reset:hover {
+  color: #E8E6E1;
+  border-color: #6A6E74;
 }
 
 /* The cluster count, on hover only. */

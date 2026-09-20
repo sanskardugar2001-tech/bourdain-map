@@ -92,6 +92,12 @@ export function youtubeShortsId(rawUrl: string): string | null {
   ) {
     const i = parts.indexOf("shorts");
     if (i >= 0 && parts[i + 1] && YT_ID.test(parts[i + 1])) return parts[i + 1];
+    const embed = parts.indexOf("embed");
+    if (embed >= 0 && parts[embed + 1] && YT_ID.test(parts[embed + 1])) {
+      return parts[embed + 1];
+    }
+    const v = u.searchParams.get("v");
+    if (v && YT_ID.test(v)) return v;
     return null;
   }
 

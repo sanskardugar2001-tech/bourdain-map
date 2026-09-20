@@ -72,6 +72,7 @@ export default function Home() {
       <FluidHero
         video={m.pullback?.file ? `/home/${m.pullback.file}` : undefined}
         poster={footagePoster}
+        vertical={m.pullback?.vertical}
       />
 
       <HeroPullback
@@ -110,7 +111,7 @@ export default function Home() {
       <section className={`${s.section} ${s.bridge} reveal`}>
         <div>
           <MaskedText as="p" text={n(stats.places)} className={s.counter} />
-          <p className="label">places he sat</p>
+          <p className="label">places he ate</p>
         </div>
         <p className={s.bridgeArrow}>then one table</p>
         <div>

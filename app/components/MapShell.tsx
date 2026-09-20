@@ -85,6 +85,10 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const onPreview = useCallback((lon: number, lat: number, zoom: number) => {
+    setCamera({ lon, lat, zoom });
+  }, []);
+
   const panelOpen = kind === "place" || kind === "city";
 
   return (
@@ -98,6 +102,7 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
             selectedCitySlug={kind === "city" ? slug : null}
             cities={index?.cities ?? null}
             flyTo={camera}
+            panelOpen={panelOpen}
           />
         </MapSafe>
       </div>
@@ -120,7 +125,7 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
           {index && (
             <MapSearch
               index={index}
-              onPreview={(lon, lat, zoom) => setCamera({ lon, lat, zoom })}
+              onPreview={onPreview}
               onChoose={(href) => router.push(href)}
             />
           )}
@@ -148,7 +153,7 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
         <SearchPalette
           index={index}
           onClose={() => setPaletteOpen(false)}
-          onPreview={(lon, lat, zoom) => setCamera({ lon, lat, zoom })}
+          onPreview={onPreview}
           onChoose={(href) => {
             setPaletteOpen(false);
             router.push(href);

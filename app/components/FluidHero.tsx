@@ -120,11 +120,31 @@ in vec2 vUv; out vec4 o;
 uniform sampler2D uDye, uMap;
 uniform vec3 uGround;
 uniform float uEdge, uSoft;
+uniform float uVideoAspect, uCanvasAspect;
 void main() {
   float ink = texture(uDye, vUv).x;
   float m = smoothstep(uEdge, uEdge + uSoft * 0.4, ink);
-  vec3 map = texture(uMap, vec2(vUv.x, 1.0 - vUv.y)).rgb;
-  o = vec4(mix(uGround, map, m), 1.0);
+  vec3 mapCol = uGround;
+  if (uVideoAspect > 0.0 && uCanvasAspect > 0.0) {
+    float w = uVideoAspect / uCanvasAspect;
+    if (w <= 1.0) {
+      float x0 = (1.0 - w) * 0.5;
+      if (vUv.x >= x0 && vUv.x <= x0 + w) {
+        float vx = (vUv.x - x0) / w;
+        mapCol = texture(uMap, vec2(vx, 1.0 - vUv.y)).rgb;
+      }
+    } else {
+      float h = uCanvasAspect / uVideoAspect;
+      float y0 = (1.0 - h) * 0.5;
+      if (vUv.y >= y0 && vUv.y <= y0 + h) {
+        float vy = (vUv.y - y0) / h;
+        mapCol = texture(uMap, vec2(vUv.x, 1.0 - vy)).rgb;
+      }
+    }
+  } else {
+    mapCol = texture(uMap, vec2(vUv.x, 1.0 - vUv.y)).rgb;
+  }
+  o = vec4(mix(uGround, mapCol, m), 1.0);
 }`;
 
 type FBO = { fb: WebGLFramebuffer; tex: WebGLTexture; w: number; h: number };
@@ -140,9 +160,11 @@ function hexToRgb(hex: string): [number, number, number] {
 export default function FluidHero({
   video,
   poster,
+  vertical,
 }: {
   video?: string;
   poster?: string;
+  vertical?: boolean;
 }) {
   const stage = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -443,6 +465,14 @@ export default function FluidHero({
       gl.uniform3f(u(progs.display, "uGround"), ground[0], ground[1], ground[2]);
       gl.uniform1f(u(progs.display, "uEdge"), EDGE);
       gl.uniform1f(u(progs.display, "uSoft"), SOFT);
+      const vAspect = (vertical && footage && footage.readyState >= 2)
+        ? 9 / 16
+        : (!vertical && footage && footage.videoWidth > 0
+          ? footage.videoWidth / footage.videoHeight
+          : 0);
+      const cAspect = host.clientWidth / Math.max(1, host.clientHeight);
+      gl.uniform1f(u(progs.display, "uVideoAspect"), vAspect);
+      gl.uniform1f(u(progs.display, "uCanvasAspect"), cAspect);
       blit(null);
     });
 
@@ -456,7 +486,7 @@ export default function FluidHero({
       canvas.removeEventListener("webglcontextlost", onLost);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [live, poster]);
+  }, [live, poster, vertical]);
 
   /* Soft 2D reveal when WebGL is gated off — still footage, still a gesture. */
   useEffect(() => {
@@ -519,7 +549,14 @@ export default function FluidHero({
   const letters = ["B", "O", "U", "R", "D", "A", "I", "N"];
 
   return (
-    <section ref={stage} className={s.fluidHero} data-hero data-live={live} data-journey="film">
+    <section
+      ref={stage}
+      className={s.fluidHero}
+      data-hero
+      data-live={live}
+      data-vertical={vertical ? "true" : "false"}
+      data-journey="film"
+    >
       {video && (
         <video
           ref={footageRef}
