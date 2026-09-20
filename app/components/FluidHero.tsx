@@ -174,9 +174,15 @@ export default function FluidHero({
   const [brush, setBrush] = useState(false);
   const [muted, setMuted] = useState(true);
 
-  /* WebGL fluid on wide fine pointers. Everyone else gets a 2D brush
-     that still reveals the footage — never a dead hero. */
+  /* WebGL fluid on wide fine pointers — except when the splash is a
+     9:16 film. That clip is the picture; burying it under an opaque
+     sim stretched it into a landscape smear. */
   useEffect(() => {
+    if (vertical) {
+      setLive(false);
+      setBrush(false);
+      return;
+    }
     const wide = window.matchMedia("(min-width: 992px)");
     const fine = window.matchMedia("(pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -190,7 +196,7 @@ export default function FluidHero({
     return () => {
       for (const m of [wide, fine, reduced]) m.removeEventListener("change", sync);
     };
-  }, []);
+  }, [vertical]);
 
   /* The simulation. Everything in here fails toward the static hero. */
   useEffect(() => {
