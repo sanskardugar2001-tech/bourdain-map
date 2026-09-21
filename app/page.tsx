@@ -96,21 +96,9 @@ export default function Home() {
         }
       />
 
-      <section className={`${s.section} ${s.bridge} reveal`}>
-        <div>
-          <MaskedText as="p" text={n(stats.places)} className={s.counter} />
-          <p className="label">places he ate</p>
-        </div>
-        <p className={s.bridgeArrow}>then one table</p>
-        <div>
-          <MaskedText as="p" text={String(seats)} className={s.counter} />
-          <p className="label">seats in London</p>
-        </div>
-      </section>
-
       <ScaleSequence />
 
-      <section className={`${s.section} ${s.londonBlock} reveal`} id="london-door">
+      <section className={`${s.section} ${s.londonBlock} reveal`} id="london">
         <p className="label">the first table</p>
         <MaskedText as="p" text="One table in London." className={s.inviteLine} />
         <MaskedText as="p" text="Eight seats. Come alone." className={s.quote} />
