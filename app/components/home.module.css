@@ -461,6 +461,9 @@
   letter-spacing: 0.08em;
   color: var(--ink-dim);
   max-width: min(36rem, 92vw);
+  font-family: var(--font-mono);
+  font-weight: var(--w-regular);
+  text-transform: uppercase;
 }
 
 @media (max-width: 520px) {
@@ -471,14 +474,19 @@
   }
 }
 
-/* Reduced-motion / no-JS stack uses the same tiny .label — bump it too. */
-.scaleStackItem :global(.label) {
+/* No global .label — that class adds ( parentheses ) we don't want here. */
+.scaleStackLabel {
+  margin: 0;
+  font-family: var(--font-mono);
   font-size: clamp(1rem, 2.2vw, 1.5rem);
+  font-weight: var(--w-regular);
   line-height: 1.35;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--ink-dim);
   white-space: normal;
   max-width: 36rem;
+  text-align: center;
 }
 
 /* Reduced motion wins even if the pin attribute was set. The stack is

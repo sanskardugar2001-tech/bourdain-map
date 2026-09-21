@@ -104,7 +104,7 @@ export default function ScaleSequence() {
           {BEATS.map((b, i) => (
             <p
               key={b.label}
-              className={`label ${s.scaleFade} ${s.scaleBeatLabel}`}
+              className={`${s.scaleFade} ${s.scaleBeatLabel}`}
               data-step={i}
             >
               {b.label}
@@ -118,7 +118,7 @@ export default function ScaleSequence() {
               <p className={s.scaleStackNum} data-scale-num="">
                 {b.num}
               </p>
-              <p className="label">{b.label}</p>
+              <p className={s.scaleStackLabel}>{b.label}</p>
             </li>
           ))}
         </ol>
