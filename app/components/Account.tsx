@@ -22,8 +22,8 @@ export default function Account() {
           The map is open without signing in. Leave a name for the first
           London table if that&rsquo;s why you&rsquo;re here.
         </p>
-        <Link className={s.button} href="/tables/#london">
-          Hear about the London table
+        <Link className={s.button} href="/#london">
+          One table in London
         </Link>
       </div>
     );
@@ -56,8 +56,7 @@ export default function Account() {
             />
             <button className={s.button} type="submit">Send me a link</button>
             <p className={s.note}>
-              Only needed to open a table, take a seat, or write something.
-              Looking at the map needs nothing.
+              Only needed to flag a wrong pin. Looking at the map needs nothing.
             </p>
           </>
         )}

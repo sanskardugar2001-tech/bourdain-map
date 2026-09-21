@@ -1,8 +1,9 @@
 {
   "intro": {
-    "photo": "",
-    "alt": "",
-    "text": "A map of where Anthony Bourdain ate, and a way for strangers to sit down at those places and eat together. Fan-made. Sells nothing."
+    "photo": "sanskar.jpg",
+    "alt": "Sanskar",
+    "credit": "Sanskar",
+    "text": "Heya — Sanskar this side."
   },
   "places": [],
   "tattoo": {
@@ -12,10 +13,11 @@
   },
   "essay": {
     "paragraphs": [
-      "People everywhere are broadly the same, mostly kind, and everyone has a story worth hearing. That was his idea. This site is built so that idea has somewhere to sit, rather than a paragraph on an About page.",
-      "The map is the browsing surface. The table is the point: someone picks a place, sets a date, opens a few seats, strangers take them. After the meal, whoever went writes a short piece about who they met. Not a review — a story.",
-      "The first table is in London. Eight seats. Come alone. We will write when the date is set.",
-      "Almost every pin comes from a map deannd built on r/AnthonyBourdain over about two years, watching the shows and writing down where he went. Used with permission. Her descriptions appear on the place pages, quoted and credited — they are hers, not the site's voice."
+      "I'm 24. Moved to London from India for uni in 2021; now I lead marketing at a startup here.",
+      "I have one tattoo. It's Bourdain. That should tell you enough.",
+      "It started as pleasure — watching some guy travel and eat. Then it became the stories. Joy in simple things. Eating at a local spot with the same respect he'd give a white-tablecloth room. I want to live a bit more like that, and meet people who do too.",
+      "Weird, how much one person can change how you see strangers. He's made me kinder, a little humbler, less quick to judge — and yes, that sounds like I'm polishing my own halo. Still true.",
+      "I'm starting to find more people who got the same spark from him. This site — and the First Table — is me trying to sit down with them."
     ]
   }
 }

@@ -593,7 +593,7 @@ export default function FluidHero({
         ))}
       </h1>
       <a className={`${s.heroCta} arrival-text`} data-arrival-text href="#london" data-cursor="table">
-        Hear about the first London dinner
+        Come alone
       </a>
       <p className={`${s.scrollCue} arrival-cue`} aria-hidden="true">
         <span className="label">scroll</span>

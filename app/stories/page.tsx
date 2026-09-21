@@ -1,3 +1,7 @@
-import StoryFeed from "../components/StoryFeed";
-export const metadata = { title: "Stories" };
-export default function Page() { return <StoryFeed />; }
+import GoHome from "../components/GoHome";
+
+export const metadata = { robots: { index: false } };
+
+export default function Page() {
+  return <GoHome />;
+}

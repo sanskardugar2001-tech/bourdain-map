@@ -20,7 +20,10 @@ const body = Inter_Tight({
 });
 
 export const metadata: Metadata = {
-  title: "Where he ate",
+  title: {
+    default: "Bourdain Club",
+    template: "%s — Bourdain Club",
+  },
   description:
     "Every place Anthony Bourdain ate, on one map. Fan-made, non-commercial, " +
     "not affiliated with the Bourdain estate, CNN, or Zero Point Zero.",

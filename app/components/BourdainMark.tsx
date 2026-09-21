@@ -8,8 +8,8 @@ import s from "./home.module.css";
    afterwards the same lockup is the nav logo at small size. One component so
    they cannot drift apart.
 
-   "Where he ate" is deliberately *not* part of it. The mark can be a flex;
-   the sentence explaining what the site is cannot. */
+   The words beside it are not part of the mark. The mark can be a flex;
+   the sentence next to it cannot. */
 
 export default function BourdainMark({
   photo, meta, alt, small, huge, isFinal, probe, sizes = "80px",

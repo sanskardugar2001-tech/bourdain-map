@@ -9,8 +9,7 @@ const NAV = [
   { href: "/", label: "Home" },
   { href: "/map/", label: "Map" },
   { href: "/reels/", label: "Reels" },
-  { href: "/tables/", label: "Tables" },
-  { href: "/stories/", label: "Stories" },
+  { href: "/about/", label: "About" },
 ];
 
 export default function SiteHeader() {
@@ -18,9 +17,9 @@ export default function SiteHeader() {
   return (
     <header className={`${styles.header} arrival-nav`}>
       {/* next/link prefetches on hover by default in production builds. */}
-      <Link href="/" className={styles.wordmark} aria-label="Where he ate — home">
+      <Link href="/" className={styles.wordmark} aria-label="Bourdain Club — home">
         <BourdainMark small />
-        <span className={styles.sentence}>Where he ate</span>
+        <span className={styles.sentence}>Bourdain Club</span>
       </Link>
       <nav className={styles.nav}>
         {NAV.map((n) => (

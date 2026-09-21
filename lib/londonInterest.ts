@@ -1,9 +1,17 @@
-/** Shared London dinner list. Client-only. Never blocks on Typeform. */
+/** This device's copy of a First Table signup. The sheet is the record. */
 
 export const INTEREST_KEY = "wha:london-interest";
 export const INTEREST_EVENT = "wha:london-interest";
 
-export type Interest = { name: string; email: string; note: string; at: number };
+export type Interest = {
+  name: string;
+  age: number;
+  gender: string;
+  phone: string;
+  email: string;
+  note: string;
+  at: number;
+};
 
 export function readInterest(): Interest | null {
   if (typeof window === "undefined") return null;
@@ -11,7 +19,7 @@ export function readInterest(): Interest | null {
     const raw = localStorage.getItem(INTEREST_KEY);
     if (!raw) return null;
     const saved = JSON.parse(raw) as Interest;
-    return saved?.email && saved?.name ? saved : null;
+    return saved?.name ? saved : null;
   } catch {
     return null;
   }
@@ -34,8 +42,4 @@ export function onInterest(fn: (row: Interest | null) => void): () => void {
     window.removeEventListener(INTEREST_EVENT, ping);
     window.removeEventListener("storage", onStore);
   };
-}
-
-export function validEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }

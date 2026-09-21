@@ -177,29 +177,33 @@ function parse(raw: Raw, i: number): ReelEntry | null {
   return null;
 }
 
+function readReelFile(file: "content/home.json" | "content/reels.json"): Raw[] {
+  const abs = file === "content/home.json"
+    ? path.join(process.cwd(), "content/home.json")
+    : path.join(process.cwd(), "content/reels.json");
+  try {
+    const manifest = JSON.parse(fs.readFileSync(abs, "utf-8")) as { reels?: Raw[] };
+    return manifest.reels ?? [];
+  } catch {
+    return [];
+  }
+}
+
 export function reelEntries(): ReelEntry[] {
-  const files = ["content/home.json", "content/reels.json"];
   const seen = new Set<string>();
   const local: ReelEntry[] = [];
   const remote: ReelEntry[] = [];
-  files.forEach((rel) => {
-    try {
-      const manifest = JSON.parse(
-        fs.readFileSync(path.join(process.cwd(), rel), "utf-8")
-      ) as { reels?: Raw[] };
-      (manifest.reels ?? []).forEach((raw, i) => {
-        const e = parse(raw, i);
-        if (!e) return;
-        const key = e.file || e.videoId || e.url || e.id;
-        if (seen.has(key)) return;
-        seen.add(key);
-        if (e.platform === "local") local.push(e);
-        else remote.push(e);
-      });
-    } catch {
-      /* optional */
-    }
-  });
+  for (const raws of [readReelFile("content/home.json"), readReelFile("content/reels.json")]) {
+    raws.forEach((raw, i) => {
+      const e = parse(raw, i);
+      if (!e) return;
+      const key = e.file || e.videoId || e.url || e.id;
+      if (seen.has(key)) return;
+      seen.add(key);
+      if (e.platform === "local") local.push(e);
+      else remote.push(e);
+    });
+  }
   if (remote.length < MIN_REMOTE) {
     throw new Error(
       `Need ≥${MIN_REMOTE} TikTok or YouTube Shorts URLs in content/reels.json ` +

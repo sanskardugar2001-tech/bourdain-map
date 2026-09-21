@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const c = cityBySlug(slug);
   if (!c) return { title: "Not found" };
   return {
-    title: `${c.name} — where he ate`,
+    title: c.name,
     description: `${c.places.length} places Anthony Bourdain went in ${c.name}.`,
   };
 }

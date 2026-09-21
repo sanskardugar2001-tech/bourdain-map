@@ -1,22 +1,14 @@
 import type { NextConfig } from "next";
 
 /**
- * Static export. The read path never touches a database: the site is
- * `places.geojson`, `search-index.json` and one JSON per city, served from a
- * CDN and cached. Postgres is the build-time workbench, not the runtime.
+ * Pages are still generated up front. Postgres is the build-time workbench,
+ * not the runtime. One route is a server: POST /api/first-table reads
+ * FIRST_TABLE_SHEETS_WEBHOOK and appends a row. That cannot live in a pure
+ * static export, so `output: "export"` stays off.
  *
- * Verified before committing to this (see notes/decisions.md):
- *   - Supabase magic link works. Both flows resolve in the browser — implicit
- *     puts the token in the URL fragment, PKCE exchanges ?code= via
- *     exchangeCodeForSession(). Neither needs a server route. What would NOT
- *     work is @supabase/ssr's cookie-based session, which requires one.
- *   - Live RSVP counts work. A static page client-fetches the gathering_seats
- *     view with the anon key. Confirmed against the running instance.
- *
- * So the eventual gatherings and auth work does not force SSR later.
+ * Auth stays in the browser (magic link). Don't reach for @supabase/ssr.
  */
 const nextConfig: NextConfig = {
-  output: "export",
   images: { unoptimized: true },
   trailingSlash: true,
   // A stray package-lock.json in the home directory makes Turbopack infer the

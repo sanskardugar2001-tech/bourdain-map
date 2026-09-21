@@ -109,7 +109,7 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
 
       <header className={styles.masthead}>
         <div className={styles.brand}>
-          <a href="/" className={styles.wordmark}>Where he ate</a>
+          <a href="/" className={styles.wordmark}>Bourdain Club</a>
           <p className={styles.tagline}>
             Every place Anthony Bourdain ate. Pick a city.
           </p>
@@ -118,8 +118,7 @@ export default function MapShell({ children }: { children: React.ReactNode }) {
           <a href="/">Home</a>
           <a href="/map/">Map</a>
           <a href="/reels/">Reels</a>
-          <a href="/tables/">Tables</a>
-          <a href="/stories/">Stories</a>
+          <a href="/about/">About</a>
         </nav>
         <div className={styles.searchSlot}>
           {index && (

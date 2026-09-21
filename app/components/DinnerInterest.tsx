@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase, supabaseConfigured } from "../../lib/supabase";
+import { GENDERS, parseFirstTable } from "../../lib/firstTable";
 import {
   onInterest,
-  validEmail,
   writeInterest,
   type Interest,
 } from "../../lib/londonInterest";
@@ -18,6 +17,9 @@ export default function DinnerInterest({
   seats?: number;
 }) {
   const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
   const [saved, setSaved] = useState<Interest | null>(null);
@@ -29,31 +31,33 @@ export default function DinnerInterest({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setErr(null);
-    const payload: Interest = {
-      name: name.trim(),
-      email: email.trim(),
-      note: note.trim(),
-      at: Date.now(),
-    };
-    if (!payload.name || !validEmail(payload.email)) {
-      setErr("A name and a real email — that's all.");
+    const parsed = parseFirstTable({
+      name,
+      age,
+      gender,
+      phone,
+      email,
+      note,
+    });
+    if (!parsed.ok) {
+      setErr(parsed.error);
       return;
     }
     setBusy(true);
     try {
-      try { writeInterest(payload); } catch { /* private mode */ }
-      if (supabaseConfigured) {
-        const { error } = await supabase.from("dinner_interest").insert({
-          name: payload.name,
-          email: payload.email,
-          note: payload.note || null,
-          city: "London",
-        });
-        if (error) {
-          console.warn("[dinner] supabase insert skipped", error.message);
-        }
+      const res = await fetch("/api/first-table/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(parsed.value),
+      });
+      const data = await res.json().catch(() => null) as { ok?: boolean; error?: string } | null;
+      if (!res.ok || !data?.ok) {
+        setErr(data?.error || "That didn't go through. Try again.");
+        return;
       }
-      setSaved(payload);
+      const row: Interest = { ...parsed.value, at: Date.now() };
+      try { writeInterest(row); } catch { /* private mode */ }
+      setSaved(row);
     } catch {
       setErr("That didn't go through. Try again.");
     } finally {
@@ -66,8 +70,7 @@ export default function DinnerInterest({
       <div className={s.form} id={id} data-done="true" aria-live="polite">
         <p className={s.h2}>You&rsquo;re on the list</p>
         <p className={s.note}>
-          {saved.name}, we&rsquo;ll write when the first London table of{" "}
-          {seats} is set. Come alone if you want. That&rsquo;s the point.
+          {saved.name}. One table in London. {seats} seats. Come alone.
         </p>
       </div>
     );
@@ -75,11 +78,6 @@ export default function DinnerInterest({
 
   return (
     <form className={s.form} id={id} onSubmit={onSubmit} noValidate>
-      <p className={s.h2}>Hear about the first London dinner</p>
-      <p className={s.note}>
-        {seats} seats. No date yet. Leave a name and an email — we&rsquo;ll
-        write when there&rsquo;s a table.
-      </p>
       <label className={s.label} htmlFor={`${id}-name`}>Name</label>
       <input
         id={`${id}-name`}
@@ -87,6 +85,41 @@ export default function DinnerInterest({
         value={name}
         onChange={(e) => setName(e.target.value)}
         autoComplete="name"
+        required
+      />
+      <label className={s.label} htmlFor={`${id}-age`}>Age</label>
+      <input
+        id={`${id}-age`}
+        className={s.input}
+        type="number"
+        inputMode="numeric"
+        min={1}
+        max={120}
+        value={age}
+        onChange={(e) => setAge(e.target.value)}
+        required
+      />
+      <label className={s.label} htmlFor={`${id}-gender`}>Gender</label>
+      <select
+        id={`${id}-gender`}
+        className={s.select}
+        value={gender}
+        onChange={(e) => setGender(e.target.value)}
+        required
+      >
+        <option value="">Choose</option>
+        {GENDERS.map((g) => (
+          <option key={g} value={g}>{g}</option>
+        ))}
+      </select>
+      <label className={s.label} htmlFor={`${id}-phone`}>Phone</label>
+      <input
+        id={`${id}-phone`}
+        className={s.input}
+        type="tel"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        autoComplete="tel"
         required
       />
       <label className={s.label} htmlFor={`${id}-email`}>Email</label>
@@ -97,7 +130,6 @@ export default function DinnerInterest({
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         autoComplete="email"
-        required
       />
       <label className={s.label} htmlFor={`${id}-note`}>Anything to say</label>
       <input

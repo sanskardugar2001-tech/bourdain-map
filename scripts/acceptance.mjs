@@ -244,7 +244,7 @@ const browser = await puppeteer.launch({
   const p = await browser.newPage();
   await p.setViewport({ width: 1440, height: 900 });
 
-  for (const route of ["/?loader=off", "/about/", "/tables/"]) {
+  for (const route of ["/?loader=off", "/about/"]) {
     await p.goto(`${BASE}${route}`, { waitUntil: "networkidle0" });
     await new Promise((r) => setTimeout(r, 2200));
     await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));

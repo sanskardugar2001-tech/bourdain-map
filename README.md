@@ -1,4 +1,4 @@
-# Where he ate
+# Bourdain Club
 
 A map of every place Anthony Bourdain ate, and a way to go and eat there with
 someone you haven't met. Fan-made, non-commercial, not affiliated with the
@@ -38,12 +38,13 @@ python3 scripts/export_map_data.py   # regenerate the static artifacts
 npm run dev                          # http://localhost:3000
 ```
 
-`npm run build` produces a static export in `out/`. It runs
-`scripts/optimise_photos.mjs` first, which resizes the About page's photos.
+`npm run build` prerenders the pages and keeps one server route,
+`POST /api/first-table`. It runs `scripts/optimise_photos.mjs` first, which
+resizes the About page's photos.
 
 ## Environment variables
 
-Copy `.env.example` to `.env.local` for local work, and set the same four in
+Copy `.env.example` to `.env.local` for local work, and set the same values in
 Vercel (Project → Settings → Environment Variables, all environments).
 
 | Variable | What it's for | Where to get it |
@@ -52,18 +53,19 @@ Vercel (Project → Settings → Environment Variables, all environments).
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Same | Supabase → Project Settings → API Keys → `anon` / publishable |
 | `NEXT_PUBLIC_PROTOMAPS_KEY` | Basemap tiles | https://protomaps.com → sign up → API key |
 | `NEXT_PUBLIC_PMTILES_URL` | Basemap tiles, self-hosted alternative | A `.pmtiles` URL on R2. Leave unset if using the key above |
+| `FIRST_TABLE_SHEETS_WEBHOOK` | First Table form → Google Sheet | Apps Script web app URL. See `scripts/first-table-sheets-webhook.gs`. Server only. |
 
-All four are `NEXT_PUBLIC_`, so all four end up in the browser bundle. That is
-correct for every one of them: the anon key is designed to be public and is
-useless without the RLS policies, and the tile key is a per-domain read key.
-No secret ever goes in this app — there is no server to keep one on.
+The `NEXT_PUBLIC_` keys end up in the browser bundle. That is correct for
+them: the anon key is designed to be public and is useless without the RLS
+policies, and the tile key is a per-domain read key. The sheet webhook is
+not public. It stays in `FIRST_TABLE_SHEETS_WEBHOOK` and is read only by
+`POST /api/first-table`.
 
 Without the tile variables the map still runs — light paper (OpenFreeMap
 Positron) by default, with a night toggle. No API key, no watermark.
 Optionally set `NEXT_PUBLIC_PROTOMAPS_KEY` on Vercel later for vector tiles.
-Without the Supabase ones, the map, tables, stories, and the London dinner
-list still work. The form holds your name on this device until a backend
-is attached.
+Without the Supabase ones, the map still works. The First Table form needs
+`FIRST_TABLE_SHEETS_WEBHOOK` or the signup does not confirm.
 
 ## Deploying
 

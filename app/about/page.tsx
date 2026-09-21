@@ -1,80 +1,53 @@
-import { siteStats, n } from "../../lib/stats";
-import { aboutManifest } from "../../lib/about";
-import Credits from "../components/Credits";
 import styles from "./about.module.css";
 import Link from "next/link";
 
 export const metadata = {
   title: "About",
-  description:
-    "Why this map exists. Fan-made, sells nothing, not affiliated with the " +
-    "Bourdain estate, CNN, or Zero Point Zero.",
+  description: "Sanskar. The map, and one table in London.",
 };
 
 export default function About() {
-  const stats = siteStats();
-  const m = aboutManifest();
-  const essay = (m.essay?.paragraphs ?? []).filter((p) => p && p.trim());
-
   return (
-    <article className={styles.about}>
-      <header className={styles.intro}>
-        <div className={styles.introText}>
+    <>
+      <article className={styles.about}>
+        <header className={styles.intro}>
+          <img
+            className={styles.portrait}
+            src="/about/sanskar.jpg"
+            alt="Sanskar"
+            width={800}
+            height={1000}
+          />
           <h1 className={styles.h1}>About</h1>
-          <p className={styles.lede}>
-            {m.intro?.text?.trim() ||
-              "A map of where Anthony Bourdain ate, and a way for strangers to sit down at those places and eat together."}
+          <p className={styles.lede}>Heya — Sanskar this side.</p>
+        </header>
+
+        <div className={styles.essay}>
+          <p>
+            I&rsquo;m 24. Moved to London from India for uni in 2021; now I
+            lead marketing at a startup here.
+          </p>
+          <p>
+            I have one tattoo. It&rsquo;s Bourdain. That should tell you enough.
+          </p>
+          <p>
+            It started as pleasure — watching some guy travel and eat. Then it
+            became the stories. Joy in simple things. Eating at a local spot
+            with the same respect he&rsquo;d give a white-tablecloth room. I
+            want to live a bit more like that, and meet people who do too.
+          </p>
+          <p>
+            Weird, how much one person can change how you see strangers.
+            He&rsquo;s made me kinder, a little humbler, less quick to judge —
+            and yes, that sounds like I&rsquo;m polishing my own halo. Still true.
+          </p>
+          <p>
+            I&rsquo;m starting to find more people who got the same spark from
+            him. This site — and the <Link href="/#london">First Table</Link> —
+            is me trying to sit down with them.
           </p>
         </div>
-      </header>
-
-      <section className={styles.section}>
-        <h2 className={styles.h2}>The idea</h2>
-        <div className={styles.essay}>
-          {essay.map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
-        </div>
-        <p>
-          <Link href="/tables/#london">Hear about the first London dinner</Link>
-          {" · "}
-          <Link href="/map/">Open the map</Link>
-        </p>
-      </section>
-
-      <section className={styles.terms}>
-        <h2 className={styles.h2}>The dull but important part</h2>
-        <ul className={styles.plain}>
-          <li>
-            Almost every place on this map comes from a map{" "}
-            <strong>deannd</strong> built on r/AnthonyBourdain over about two
-            years, watching the shows and writing down where he went.{" "}
-            {n(stats.places)} places. Used with permission. Her descriptions
-            appear throughout, quoted and credited — they&rsquo;re hers, not
-            the site&rsquo;s voice.
-          </li>
-          <li>
-            This site sells nothing. No ads, no affiliate links, no bookings,
-            no sponsored placement. Not now and not later.
-          </li>
-          <li>
-            It is not affiliated with the Bourdain estate, CNN, or Zero Point
-            Zero. Nobody involved with the shows has anything to do with it.
-          </li>
-          <li>
-            Some of these places are gone. They stay on the map, greyed out,
-            because a restaurant closing is part of the story — and because it
-            stops you turning up to a shuttered address.
-          </li>
-          <li>
-            The pullback film is by MANIFESTO (@bymnfsto), used with
-            permission. Food stills are CC0 / public domain. Portraits of him
-            are CC BY 2.0 via Wikimedia Commons.
-          </li>
-        </ul>
-      </section>
-
-      <Credits />
-    </article>
+      </article>
+    </>
   );
 }

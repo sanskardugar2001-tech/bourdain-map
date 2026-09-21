@@ -6,6 +6,8 @@
   flex-direction: column;
   gap: var(--s6);
   max-width: var(--measure);
+  margin: 0 auto;
+  padding: var(--s7) var(--s5) var(--s8);
 }
 
 .h1 {
@@ -22,10 +24,18 @@
 
 /* ------------------------------------------------------------- intro */
 .intro {
-  display: grid;
-  grid-template-columns: 128px 1fr;
+  display: flex;
+  flex-direction: column;
   gap: var(--s4);
   align-items: start;
+}
+.portrait {
+  width: min(220px, 100%);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--raised);
 }
 .introPhoto {
   width: 100%;
@@ -184,6 +194,5 @@
 .plain strong { color: var(--ink); font-weight: 400; }
 
 @media (max-width: 720px) {
-  .intro { grid-template-columns: 96px 1fr; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
 }
