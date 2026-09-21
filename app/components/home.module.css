@@ -455,13 +455,30 @@
   transform: translateX(-50%);
   white-space: nowrap;
   text-align: center;
+  /* Global .label is 12px faint — unreadable under the big numbers. */
+  font-size: clamp(1.125rem, 2.6vw, 1.75rem) !important;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  max-width: min(36rem, 92vw);
 }
 
 @media (max-width: 520px) {
   .scaleBeatLabel {
     white-space: normal;
-    width: min(18rem, 86vw);
+    width: min(22rem, 90vw);
+    font-size: clamp(1rem, 4.2vw, 1.35rem) !important;
   }
+}
+
+/* Reduced-motion / no-JS stack uses the same tiny .label — bump it too. */
+.scaleStackItem :global(.label) {
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  white-space: normal;
+  max-width: 36rem;
 }
 
 /* Reduced motion wins even if the pin attribute was set. The stack is
