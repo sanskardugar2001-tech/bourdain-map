@@ -251,7 +251,6 @@ function LocalPullback({
             <span className="label">play</span>
           </button>
         )}
-        <p className={s.videoCreditLine}>{creditLine}</p>
       </div>
     );
   }
@@ -272,7 +271,6 @@ function LocalPullback({
         </div>
         {state === "blocked" && missingCard}
       </div>
-      <span className={s.roomCredit}>{creditLine}</span>
       <button
         type="button"
         className={s.soundPill}

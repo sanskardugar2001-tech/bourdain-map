@@ -3,7 +3,7 @@
     "The homepage. Edit this, drop images in public/home/, and the page updates.",
     "EVERY PHOTO NEEDS A CREDIT.",
     "Him-slots (loader O, hero, pairing, pullback people, reel posters) are solo portraits only.",
-    "No food plates anywhere on `/` — not loader, hero, pairing, gallery, or pullback stills.",
+    "No food plates anywhere on `/` \u2014 not loader, hero, pairing, gallery, or pullback stills.",
     "Every still is unique by filename. Do not repeat a path across lists."
   ],
   "loader": {
@@ -11,7 +11,7 @@
       {
         "photo": "bourdain-portrait-black.jpg",
         "alt": "Anthony Bourdain, stark portrait",
-        "credit": "CC BY 2.0 — crop 3, Wikimedia"
+        "credit": "CC BY 2.0 \u2014 crop 3, Wikimedia"
       },
       {
         "photo": "bourdain-portrait-hires.jpg",
@@ -62,14 +62,14 @@
     "portrait": {
       "photo": "bourdain-portrait-black.jpg",
       "alt": "Anthony Bourdain, stark portrait",
-      "credit": "CC BY 2.0 — crop 3, Wikimedia"
+      "credit": "CC BY 2.0 \u2014 crop 3, Wikimedia"
     }
   },
   "hero": {
     "photos": [],
     "quotes": [
       {
-        "text": "If I’m an advocate for anything, it’s to move. As far as you can, as much as you can.",
+        "text": "If I\u2019m an advocate for anything, it\u2019s to move. As far as you can, as much as you can.",
         "attr": "Anthony Bourdain"
       }
     ]
@@ -90,7 +90,7 @@
     {
       "photo": "bourdain-wnyc-2011.jpg",
       "alt": "Anthony Bourdain, 2011",
-      "credit": "CC BY 2.0 — WNYC",
+      "credit": "CC BY 2.0 \u2014 WNYC",
       "placeSlug": "tsukiji-fish-market-chuo",
       "line": "Tsukiji"
     }
@@ -99,13 +99,13 @@
     {
       "file": "dont-be-afraid.mp4",
       "poster": "bourdain-peabody-close.jpg",
-      "credit": "Clip by MANIFESTO (@bymnfsto), used with permission",
+      "credit": "",
       "line": "Don't be afraid to sit down."
     }
   ],
   "pullback": {
     "file": "dont-be-afraid.mp4",
-    "credit": "Clip by MANIFESTO (@bymnfsto), used with permission",
+    "credit": "",
     "videoId": "",
     "start": 0,
     "vertical": true,
@@ -125,7 +125,7 @@
     ],
     "quotes": [
       {
-        "text": "Maybe that’s enlightenment enough: to know that there is no final resting place of the mind.",
+        "text": "Maybe that\u2019s enlightenment enough: to know that there is no final resting place of the mind.",
         "attr": "Anthony Bourdain, Kitchen Confidential"
       }
     ]
