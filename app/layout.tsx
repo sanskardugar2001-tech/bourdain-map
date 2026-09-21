@@ -45,7 +45,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               // on a page that has nothing to clear it.
               "if(location.pathname==='/' && " +
               "!matchMedia('(prefers-reduced-motion: reduce)').matches){" +
-              "r.dataset.opening='pending'}}catch(e){}",
+              "r.dataset.opening='pending';" +
+              // Pins the magnitude sequence before paint, so the first frame
+              // is already the held number and not the stacked fallback.
+              "r.dataset.scalePin='1'}}catch(e){}",
           }}
         />
       </head>

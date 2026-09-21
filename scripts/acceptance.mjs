@@ -14,7 +14,7 @@ import fs from "node:fs";
 import puppeteer from "puppeteer-core";
 
 const BASE = process.argv[2] ?? "http://127.0.0.1:8900";
-const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const CHROME = process.env.CHROME || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 const stats = JSON.parse(fs.readFileSync("content/stats.generated.json", "utf-8"));
 
@@ -284,13 +284,25 @@ const browser = await puppeteer.launch({
   await new Promise((r) => setTimeout(r, 1500));
   const loader = await p.$("[data-loader-count]");
   ok("reduced motion renders no loader", loader === null);
+  const reducedScale = await p.evaluate(() => {
+    const el = document.querySelector("[data-scale]");
+    const stack = el?.querySelector("[data-scale-stack]");
+    return {
+      pin: Boolean(el?.hasAttribute("data-pin")),
+      stack: stack ? getComputedStyle(stack).display !== "none" : false,
+      pins: document.querySelectorAll("[data-pin]").length,
+    };
+  });
+  ok("reduced motion: scale sequence stacks, no pins",
+     reducedScale.pin === false && reducedScale.stack && reducedScale.pins === 0,
+     JSON.stringify(reducedScale));
   await p.close();
 }
 
 /* ------------------------------------------------------------------ */
-/* Exactly one sticky set-piece: the pull-back (the trail yielded the pin
-   back when it returned). Its inline --p may exist only on the pin
-   itself; the pin count is one on desktop, zero below the 992px gate. */
+/* Two sticky set-pieces: the pull-back, then the magnitude sequence.
+   Inline --p may exist only on a pin itself. Both pin at every width;
+   reduced motion is what releases them. */
 {
   const p = await browser.newPage();
   await p.setViewport({ width: 1440, height: 900 });
@@ -304,13 +316,34 @@ const browser = await puppeteer.launch({
       (el) => !el.hasAttribute("data-pin") && el.style.getPropertyValue("--p") !== ""
     ).length,
   }));
-  ok("exactly one pinned element (the pull-back), --p only on the pin",
-     desk.pins === 1 && desk.sticky && desk.strayP === 0, JSON.stringify(desk));
+  ok("two pinned elements (pull-back and scale), --p only on the pins",
+     desk.pins === 2 && desk.sticky && desk.strayP === 0, JSON.stringify(desk));
+
+  const scale = await p.evaluate(() => {
+    const root = document.querySelector("[data-scale]");
+    const text = (root?.textContent || "").toLowerCase();
+    const lines = [
+      "leaders he sat with",
+      "countries he crossed",
+      "places he ate",
+      "hearts he moved with a story",
+    ];
+    const widths = [...document.querySelectorAll("[data-scale-scrub] [data-scale-num]")]
+      .map((el) => el.getBoundingClientRect().width);
+    const growing = widths.length === 4 && widths.every((w, i) => i === 0 || w > widths[i - 1] + 8);
+    return {
+      copy: lines.every((line) => text.includes(line)),
+      growing,
+      widths: widths.map((w) => Math.round(w)),
+    };
+  });
+  ok("scale sequence: four beats, each visibly larger",
+     scale.copy && scale.growing, JSON.stringify(scale));
 
   /* The scrollbar is the pen: the photo's --p tracks scroll linearly. */
   const scrub = async (frac) => {
     return p.evaluate(async (f) => {
-      const el = document.querySelector("[data-pin]");
+      const el = document.querySelector("[data-pullback]");
       const r = el.getBoundingClientRect();
       const travel = r.height - window.innerHeight;
       // Document-relative, NOT offsetTop: offsetTop is relative to the
@@ -337,14 +370,15 @@ const browser = await puppeteer.launch({
   await p.close();
 }
 
-/* Below the gate: no pin at all. */
+/* Below 992px the same two pins stay. The pull-back already scrubs at
+   every width; the magnitude sequence does too, on a shorter travel. */
 {
   const p = await browser.newPage();
   await p.setViewport({ width: 900, height: 900 });
   await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle0" });
   await new Promise((r) => setTimeout(r, 1200));
   const pins = await p.evaluate(() => document.querySelectorAll("[data-pin]").length);
-  ok("pull-back: no pin below 992px", pins === 0, `${pins}`);
+  ok("pull-back and scale both pin below 992px", pins === 2, `${pins}`);
   await p.close();
 }
 

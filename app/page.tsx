@@ -1,6 +1,7 @@
 import Loader from "./components/Loader";
 import FluidHero from "./components/FluidHero";
 import HeroPullback from "./components/HeroPullback";
+import ScaleSequence from "./components/ScaleSequence";
 import Reveal from "./components/Reveal";
 import MaskedText from "./components/MaskedText";
 import PlaceGallery from "./components/PlaceGallery";
@@ -8,7 +9,7 @@ import DinnerInterest from "./components/DinnerInterest";
 import Credits from "./components/Credits";
 import { homeManifest, homePhotos, allCredits, pick, asQuote, uniqueByFilename, isFoodStill } from "../lib/home";
 import { reelEntries } from "../lib/reels";
-import { siteStats, n } from "../lib/stats";
+import { siteStats } from "../lib/stats";
 import { placeBySlug } from "../lib/detail";
 import { usable, srcsetAttr, largest } from "../lib/about";
 import s from "./components/home.module.css";
@@ -115,17 +116,7 @@ export default function Home() {
         }
       />
 
-      <section className={`${s.section} ${s.bridge} reveal`}>
-        <div>
-          <MaskedText as="p" text={n(stats.places)} className={s.counter} />
-          <p className="label">places he ate</p>
-        </div>
-        <p className={s.bridgeArrow}>then one table</p>
-        <div>
-          <MaskedText as="p" text={String(seats)} className={s.counter} />
-          <p className="label">strangers in London</p>
-        </div>
-      </section>
+      <ScaleSequence />
 
       <section className={`${s.section} ${s.londonBlock} reveal`} id="london-door">
         <p className="label">the first table</p>
