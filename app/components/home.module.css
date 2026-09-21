@@ -403,7 +403,7 @@
 .scaleFade {
   --hold-start: calc(var(--i) * 0.25);
   --hold-end: calc((var(--i) + 1) * 0.25);
-  --fade: 0.042;
+  --fade: 0.018;
   --in: clamp(0, calc((var(--p, 0) - (var(--hold-start) - var(--fade))) / (var(--fade) * 2)), 1);
   --out: clamp(0, calc((var(--hold-end) + var(--fade) - var(--p, 0)) / (var(--fade) * 2)), 1);
   opacity: min(var(--in), var(--out));
@@ -419,23 +419,23 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 42%;
+  top: 38%;
   display: grid;
   place-items: center;
   transform: translateY(-50%);
   --local: clamp(0, calc((var(--p, 0) - var(--hold-start)) / 0.25), 1);
   --step-scale: 1;
 }
-.scaleBeat[data-step="0"] { --step-scale: 0.5; }
-.scaleBeat[data-step="1"] { --step-scale: 0.66; }
-.scaleBeat[data-step="2"] { --step-scale: 0.82; }
+.scaleBeat[data-step="0"] { --step-scale: 0.42; }
+.scaleBeat[data-step="1"] { --step-scale: 0.6; }
+.scaleBeat[data-step="2"] { --step-scale: 0.78; }
 .scaleBeat[data-step="3"] { --step-scale: 1; }
 
 .scaleNum {
   margin: 0;
   font-family: var(--font-display-loaded), var(--font-display);
   font-weight: var(--w-regular);
-  font-size: min(22vw, 26vh, 18rem);
+  font-size: min(24vw, 32vh, 22rem);
   line-height: var(--lh-solid);
   letter-spacing: var(--track-tight);
   font-variant-numeric: tabular-nums;
@@ -447,10 +447,10 @@
 .scaleBeatLabel {
   /* Shorter than the number's crossfade, so two captions don't sit on
      top of each other. The word morphs; the line swaps. */
-  --fade: 0.012;
+  --fade: 0.006;
   position: absolute;
   left: 50%;
-  top: 57%;
+  top: 64%;
   margin: 0;
   transform: translateX(-50%);
   white-space: nowrap;
