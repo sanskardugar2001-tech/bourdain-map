@@ -437,7 +437,6 @@
 @media (max-width: 860px) {
   .galleryGrid { grid-template-columns: 1fr; }
   .galleryCard:nth-child(n) { margin-top: 0; }
-  .heroSupport { font-size: var(--step-1); bottom: calc(var(--s7) + 28px); }
   .heroCta { bottom: var(--s6); }
   .pullInvite { left: var(--s4); bottom: var(--s4); }
   .pullback { height: 200vh; }
@@ -793,18 +792,6 @@
 :global(html[data-opening="done"]) .heroLetter > span,
 :global(html[data-opening="settled"]) .heroLetter > span {
   transform: none;
-}
-.heroSupport {
-  position: absolute;
-  left: 50%;
-  bottom: calc(var(--s8) + 18px);
-  transform: translateX(-50%);
-  z-index: 3;
-  font-family: var(--font-display-loaded), var(--font-display);
-  font-size: var(--step-3);
-  letter-spacing: var(--track-tight);
-  text-align: center;
-  pointer-events: none;
 }
 .heroCta {
   position: absolute;
