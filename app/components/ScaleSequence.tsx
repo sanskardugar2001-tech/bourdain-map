@@ -22,7 +22,7 @@ const BEATS = [
   { num: "10s", label: "leaders he sat with" },
   { num: "100s", label: "countries he crossed" },
   { num: "1,000s", label: "places he ate" },
-  { num: "millions", label: "hearts he moved with a story" },
+  { num: "millions", label: "hearts he moved with his storytelling" },
 ] as const;
 
 export default function ScaleSequence() {
