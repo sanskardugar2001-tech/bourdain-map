@@ -162,7 +162,7 @@ export default function HeroPullback({ target, video, background, invite, childr
     // data-pin is toggled by sync(): present only while the pin is live, so
     // the pin census stays truthful below 992px and under reduced motion.
     // The scroll cue is NOT here any more — FluidHero owns it now.
-    <section ref={wrap} className={s.pullback} data-pinned="false">
+    <section ref={wrap} className={s.pullback} data-pullback="" data-pinned="false">
       <div className={s.pullStage}>
         {background && (
           <div className={s.pullRoom} aria-hidden="true">

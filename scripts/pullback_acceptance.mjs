@@ -104,7 +104,7 @@ try {
     // Mid-pin, same scrub the homepage acceptance uses.
     const scrub = (frac) =>
       p.evaluate(async (f) => {
-        const el = document.querySelector("[data-pin]");
+        const el = document.querySelector("[data-pullback]");
         if (!el) return false;
         const r = el.getBoundingClientRect();
         const travel = r.height - window.innerHeight;
@@ -157,7 +157,7 @@ try {
 
     // Past the pin: paused.
     await p.evaluate(async () => {
-      const el = document.querySelector("[data-pin]");
+      const el = document.querySelector("[data-pullback]");
       const r = el.getBoundingClientRect();
       const y = r.top + window.scrollY + r.height + window.innerHeight;
       const l = window.__lenis;
@@ -202,7 +202,7 @@ try {
     await p.setViewport({ width: 1440, height: 900 });
     await p.goto(`${BASE}/?loader=off`, { waitUntil: "networkidle2" });
     await p.evaluate(() => {
-      const el = document.querySelector("[data-pin]");
+      const el = document.querySelector("[data-pullback]");
       const r = el.getBoundingClientRect();
       const y = r.top + window.scrollY + (r.height - window.innerHeight) * 0.5;
       const l = window.__lenis;
