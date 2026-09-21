@@ -364,6 +364,11 @@
   max-width: 42rem;
   justify-items: start;
 }
+.gallery {
+  gap: var(--s6);
+  padding-top: var(--s8);
+  padding-bottom: var(--s8);
+}
 .galleryGrid {
   display: grid;
   grid-template-columns: 1.3fr 0.8fr;
@@ -420,6 +425,11 @@
   color: var(--ground);
   background: var(--ink);
   border-color: var(--ink);
+}
+.reelsDoor {
+  max-width: 42rem;
+  justify-items: start;
+  gap: var(--s2);
 }
 .storiesTease {
   max-width: 36rem;
